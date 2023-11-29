@@ -388,6 +388,7 @@ if tabs == "Forecasting Analytics":
     # Preprocess data
     Sales_Daily=load_data("Koach_Sales.csv")
     Sales_Daily['Date'] = pd.to_datetime(Sales_Daily['Date'], format='%d/%m/%Y', errors='coerce')
+    Sales_Daily = Sales_Daily[Sales_Daily['Price in USD'] >= 0]
     ts_df = Sales_Daily[['Date', 'Category', 'Price in USD']]
     ts_df = ts_df.groupby(['Category', pd.Grouper(key='Date', freq='M')]).sum().reset_index()
     ts_df.columns = ['category', 'ds', 'y']
